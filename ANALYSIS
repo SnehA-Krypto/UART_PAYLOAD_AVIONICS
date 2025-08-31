@@ -1,0 +1,131 @@
+       UART Configuration between Payload and Avionics 
+							                     
+
+Delve.py
+
+This file defines the Sangam class, which is responsible for managing the UART communication.
+The class initializes the UART serial port with the specified parameters (UART ID, baud rate, and timeout) and provides methods for sending and receiving messages.
+
+The __init__ method initializes the UART serial port with the specified parameters.
+The send method encodes the provided message and writes it to the UART port.
+The start method sends an initial "Start" message.
+The read method reads incoming messages from the UART port and returns the decoded message.
+Breakdown:
+
+The code imports the necessary modules (machine and time).
+The Sangam class is defined with the following methods:
+__init__: Initializes the UART serial port with the specified parameters.
+send: Sends a message to the UART port.
+start: Sends an initial "Start" message.
+read: Reads and returns a message from the UART port.
+The if __name__ == "__main__": block creates an instance of the Sangam class and calls the start method.
+
+
+Device_A.py
+
+This file represents the "Payload System" and uses the Sangam class from the DELVE.py file to communicate over the UART.
+The code sends a message "we go boom!" repeatedly and prints any received messages.
+
+The code creates an instance of the Sangam class with the specified UART ID and baud rate.
+It calls the start method to initiate the communication.
+The while True loop continuously sends the message "we go boom!" and prints any received messages.
+
+Breakdown:
+The code imports the necessary modules (Sangam from DELVE and time).
+An instance of the Sangam class is created with the UART ID 0 and baud rate of 9600.
+The start method is called to initiate the communication.
+The while True loop continuously:
+Sends the message "we go boom!" using the send method.
+Receives and prints any messages using the read method.
+Sleeps for 1 second using time.sleep(1).
+
+
+Device_B.py
+
+This file represents the "Avionics System" and uses the Sangam class from the DELVE.py file to communicate over the UART.
+The code sends a message "Ignition!" repeatedly and prints any received messages.
+
+The code creates an instance of the Sangam class with the specified UART ID and baud rate.
+It calls the start method to initiate the communication.
+The while True loop continuously sends the message "Ignition!" and prints any received messages.
+Breakdown:
+The code imports the necessary modules (Sangam from DELVE and time).
+An instance of the Sangam class is created with the UART ID 0 and baud rate of 9600.
+The start method is called to initiate the communication.
+The while True loop continuously:
+Sends the message "Ignition!" using the send method.
+Receives and prints any messages using the read method.
+Sleeps for 1 second using time.sleep(1).
+
+
+
+	
+Specifications:
+
+
+Payload System (Device_A.py):
+
+Purpose: This device represents the "Payload System" that needs to communicate with the Avionics System.
+Functionality:
+  - Continuously sends the message "we go boom!" to the Avionics System.
+  - Receives and prints any messages received from the Avionics System.
+
+Avionics System (Device_B.py):
+
+Purpose: This device represents the "Avionics System" that needs to communicate with the Payload System.
+Functionality:
+  - Continuously sends the message "Ignition!" to the Payload System.
+  - Receives and prints any messages received from the Payload System.
+
+
+
+The overall purpose of this UART configuration is to enable communication between the Payload System and the Avionics System. The Payload System and the Avionics System can exchange messages using the `Sangam` class defined in the `DELVE.py` file, which abstracts the low-level UART communication details.
+
+
+Technical Details:- 
+
+Sure, let's dive into the technical details regarding the baud rate, timeout, and UART ID used in the UART configuration.
+
+1. Baud Rate:
+   In the provided code, the baud rate is set to 9600 bps (bits per second) for both the Payload System (Device_A.py) and the Avionics System (Device_B.py).
+ The baud rate is a crucial parameter in UART communication as it determines the speed at which data is transmitted between the devices.
+ A baud rate of 9600 is a common and widely-used setting, as it provides a balance between data transfer speed and reliability, making it suitable for many applications.
+
+2. Timeout:
+In the `Sangam` class constructor (`DELVE.py`), the timeout parameter is set to 1000 milliseconds (1 second).
+ The timeout is the maximum amount of time the UART read operation will wait for data to be available before returning.
+ Setting an appropriate timeout is important to ensure that the read operation does not block indefinitely, especially in cases where no data is received.
+ A timeout of 1 second is a reasonable value, as it allows enough time for the UART communication to complete while not causing excessive delays in the overall application.
+
+3. UART ID:
+In both the Payload System (Device_A.py) and the Avionics System (Device_B.py), the UART ID is set to 0.
+ The UART ID refers to the specific UART peripheral on the microcontroller that is being used for the communication.
+ Microcontrollers often have multiple UART peripherals, and using the correct ID is essential to ensure that the communication is established with the intended UART interface.
+ Setting the UART ID to 0 suggests that the first available UART peripheral on the microcontroller is being used for the communication.
+
+These technical details are important for the overall UART configuration and ensure that the Payload System and the Avionics System can communicate efficiently and reliably. The chosen baud rate, timeout, and UART ID settings are common and suitable for many applications, but they may need to be adjusted based on the specific requirements of the system or the hardware being used.
+
+
+Significance:-
+
+The UART communication between the Payload System and the Avionics System plays a crucial role in the functionality of the model rocket. Here's how UART helps in the overall operation:
+
+1. Data Transmission:
+   - The UART interface allows the Payload System and the Avionics System to exchange data and messages during the rocket's flight.
+   - This communication is essential for coordinating the various components and subsystems of the rocket, such as the payload and the avionics.
+
+2. Telemetry and Monitoring:
+   - The UART communication enables the Payload System and the Avionics System to send and receive telemetry data, such as sensor readings, system status, and critical parameters.
+   - This real-time data can be used to monitor the rocket's performance, track its trajectory, and detect any potential issues during the flight.
+
+3. Command and Control:
+   - The UART interface allows the Avionics System to send commands and instructions to the Payload System, enabling remote control and management of the rocket's operations.
+   - This can be crucial for adjusting the rocket's behavior, triggering specific events (e.g., payload deployment), or initiating emergency procedures if necessary.
+
+4. Synchronization and Coordination:
+   - The UART communication helps synchronize the activities and operations of the Payload System and the Avionics System, ensuring that they work together seamlessly during the rocket's flight.
+   - This coordination is essential for the successful execution of the rocket's mission, such as the timely deployment of the payload or the activation of various subsystems.
+
+5. Troubleshooting and Diagnostics:
+   - The UART communication can be used for troubleshooting and diagnostics during the development, testing, and launch of the rocket.
+   - The Payload System and the Avionics System can exchange status updates, error messages, and other diagnostic information, which can help identify and resolve any issues that arise.
